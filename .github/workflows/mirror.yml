@@ -131,3 +131,12 @@ jobs:
           tag_name: MLBB-VIPROCK-External-64bit
           files: viprock64/*
           generate_release_notes: true
+
+  RemoveDraft:
+    permissions: write-all
+    needs: [Mirror]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Draft Releases
+        if: ${{ success() }}
+        uses: hugo19941994/delete-draft-releases@v1.0.1
