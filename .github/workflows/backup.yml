@@ -3,7 +3,7 @@ name: BACKUP
 on:
   workflow_dispatch:
   schedule:
-    - cron: '* 1/* * * *'
+    - cron: '* */1 * * *'
 jobs:
   Build:
     permissions: write-all
