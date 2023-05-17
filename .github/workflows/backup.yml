@@ -27,7 +27,7 @@ jobs:
       - name: Downloading lib
         if: ${{ matrix.job.type=='32bit' }}
         run: |
-          bash backup32
+          bash knmod32
 
       - name: Delete tag if exists
         if: ${{ matrix.job.type=='32bit' }}
@@ -49,7 +49,7 @@ jobs:
       - name: Downloading lib
         if: ${{ matrix.job.type=='64bit' }}
         run: |
-          bash backup64
+          bash knmod64
 
       - name: Delete tag if exists
         if: ${{ matrix.job.type=='64bit' }}
