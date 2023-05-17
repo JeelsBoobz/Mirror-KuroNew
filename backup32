@@ -1,0 +1,3 @@
+mkdir lib
+cd lib
+wget -O libAkSoundEngine.bytes https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes
