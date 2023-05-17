@@ -28,19 +28,6 @@ jobs:
         run: |
           bash backup32
 
-      - name: Upload Release
-        if: ${{ matrix.job.type=='32bit' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: MLBB-KNMOD-External-32bit
-          files: lib/*
-          generate_release_notes: true
-
-      - name: Downloading lib
-        if: ${{ matrix.job.type=='32bit' }}
-        run: |
-          bash backup32
-
       - name: Delete tag if exists
         if: ${{ matrix.job.type=='32bit' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
@@ -55,26 +42,13 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-External-32bit
-          files: lib/*
-          generate_release_notes: true
-
-      - name: Downloading lib
-        if: ${{ matrix.job.type=='32bit' }}
-        run: |
-          bash backup32
-
-      - name: Upload Release
-        if: ${{ matrix.job.type=='32bit' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: MLBB-KNMOD-External-32bit
-          files: lib/*
+          files: lib32/*
           generate_release_notes: true
 
       - name: Downloading lib
         if: ${{ matrix.job.type=='64bit' }}
         run: |
-          bash backup32
+          bash backup64
 
       - name: Delete tag if exists
         if: ${{ matrix.job.type=='64bit' }}
@@ -90,5 +64,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-External-64bit
-          files: lib/*
+          files: lib64/*
           generate_release_notes: true
