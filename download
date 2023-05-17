@@ -1,1 +1,1 @@
-wget -O libAkSoundEngine.bytes $argv[1]
+wget -O libAkSoundEngine.bytes $1
