@@ -28,6 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: artifact
+          path: lib/
 
       - uses: actions/download-artifact@v3
         with:
