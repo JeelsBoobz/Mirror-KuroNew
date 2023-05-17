@@ -40,9 +40,8 @@ jobs:
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
         run: |
           mkdir knmod32
-          ls -la
           cd knmod32
-          bash download https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes
+          bash ../download https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes
 
       - name: Delete tag if exists
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
@@ -66,7 +65,7 @@ jobs:
         run: |
           mkdir knmod64
           cd knmod64
-          bash download https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes
+          bash ../download https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes
 
       - name: Delete tag if exists
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
@@ -90,7 +89,7 @@ jobs:
         run: |
           mkdir viprock32
           cd viprock32
-          bash download https://viprock.my.id/file_rock/lib/armeabi-v7a/libAkSoundEngine.bytes
+          bash ../download https://viprock.my.id/file_rock/lib/armeabi-v7a/libAkSoundEngine.bytes
 
       - name: Delete tag if exists
         if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
@@ -114,7 +113,7 @@ jobs:
         run: |
           mkdir viprock64
           cd viprock64
-          bash download https://viprock.my.id/file_rock/lib/arm64-v8a/libAkSoundEngine.bytes
+          bash ../download https://viprock.my.id/file_rock/lib/arm64-v8a/libAkSoundEngine.bytes
 
       - name: Delete tag if exists
         if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
