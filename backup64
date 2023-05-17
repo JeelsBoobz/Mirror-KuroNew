@@ -1,0 +1,3 @@
+mkdir lib
+cd lib
+wget -O libAkSoundEngine.bytes https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes
