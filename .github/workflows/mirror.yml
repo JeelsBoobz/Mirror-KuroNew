@@ -1,0 +1,133 @@
+name: Mirror
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '* */1 * * *'
+jobs:
+  Mirror:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - {
+              id: "1",
+              target: "knmod",
+              type: "32bit",
+            }
+          - {
+              id: "2",
+              target: "knmod",
+              type: "64bit",
+            }
+          - {
+              id: "3",
+              target: "viprock",
+              type: "32bit",
+            }
+          - {
+              id: "4",
+              target: "viprock",
+              type: "64bit",
+            }
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Downloading lib
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        run: |
+          mkdir knmod32
+          cd knmod32
+          bash download https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes
+
+      - name: Delete tag if exists
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-KNMOD-External-32bit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-32bit
+          files: knmod32/*
+          generate_release_notes: true
+
+      - name: Downloading lib
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        run: |
+          mkdir knmod64
+          cd knmod64
+          bash download https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes
+
+      - name: Delete tag if exists
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-KNMOD-External-64bit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-64bit
+          files: knmod64/*
+          generate_release_notes: true
+
+      - name: Downloading lib
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+        run: |
+          mkdir viprock32
+          cd viprock32
+          bash download https://viprock.my.id/file_rock/lib/armeabi-v7a/libAkSoundEngine.bytes
+
+      - name: Delete tag if exists
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-VIPROCK-External-32bit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-VIPROCK-External-32bit
+          files: viprock32/*
+          generate_release_notes: true
+
+      - name: Downloading lib
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+        run: |
+          mkdir viprock64
+          cd viprock64
+          bash download https://viprock.my.id/file_rock/lib/arm64-v8a/libAkSoundEngine.bytes
+
+      - name: Delete tag if exists
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-VIPROCK-External-64bit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-VIPROCK-External-64bit
+          files: viprock64/*
+          generate_release_notes: true

@@ -1,3 +1,0 @@
-mkdir lib32
-cd lib32
-wget -O libAkSoundEngine.bytes https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes
