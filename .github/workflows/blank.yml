@@ -1,47 +1,94 @@
-# This is a basic workflow to help you get started with Actions
-
 name: BACKUP
 
-# Controls when the workflow will run
 on:
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  Build:
+    permissions: write-all
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - {
+              type: "32bit",
+              id: "1",
+            }
+          - {
+              type: "64bit",
+              id: "2",
+            }
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a set of commands using the runners shell
       - name: Downloading lib
+        if: ${{ matrix.job.type=='32bit' }}
         run: |
-          bash backup
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: artifact
-          path: lib/
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: artifact
-          path: lib/
-
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: lib
+          bash backup32
 
       - name: Upload Release
+        if: ${{ matrix.job.type=='32bit' }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: MLBB-KNMOD-External
+          tag_name: MLBB-KNMOD-External-32bit
+          files: lib/*
+          generate_release_notes: true
+
+      - name: Downloading lib
+        if: ${{ matrix.job.type=='32bit' }}
+        run: |
+          bash backup32
+
+      - name: Delete tag if exists
+        if: ${{ matrix.job.type=='32bit' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-KNMOD-External-32bit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ matrix.job.type=='32bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-32bit
+          files: lib/*
+          generate_release_notes: true
+
+      - name: Downloading lib
+        if: ${{ matrix.job.type=='32bit' }}
+        run: |
+          bash backup32
+
+      - name: Upload Release
+        if: ${{ matrix.job.type=='32bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-32bit
+          files: lib/*
+          generate_release_notes: true
+
+      - name: Downloading lib
+        if: ${{ matrix.job.type=='64bit' }}
+        run: |
+          bash backup32
+
+      - name: Delete tag if exists
+        if: ${{ matrix.job.type=='64bit' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-KNMOD-External-64bit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ matrix.job.type=='64bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-64bit
           files: lib/*
           generate_release_notes: true
