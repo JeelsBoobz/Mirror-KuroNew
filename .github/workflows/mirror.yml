@@ -168,7 +168,7 @@ jobs:
 
   RemoveDraft:
     permissions: write-all
-    needs: [Mirror]
+    #needs: [Mirror]
     runs-on: ubuntu-latest
     steps:
       - name: Delete Draft Releases
