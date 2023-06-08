@@ -38,6 +38,11 @@ jobs:
               target: "knmod",
               type: "mod",
             }
+          - {
+              id: "6",
+              target: "fakecez",
+              type: "vip",
+            }
 
     steps:
       - uses: actions/checkout@v3
@@ -165,6 +170,31 @@ jobs:
         with:
           tag_name: MLBB-KNMOD-Internal
           files: knmodapk/*
+          generate_release_notes: true
+
+      - name: Downloading Fakecez VIP
+        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        run: |
+          mkdir FakecezVIP
+          cd FakecezVIP
+          URL="https://vip.fakecez.com/assets.zip"
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: MLBB-FAKECEZ-VIP
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-FAKECEZ-VIP
+          files: FakecezVIP/*
           generate_release_notes: true
 
   RemoveDraft:
