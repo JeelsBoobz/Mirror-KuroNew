@@ -40,6 +40,11 @@ jobs:
             }
           - {
               id: "6",
+              target: "knmod",
+              type: "aov",
+            }
+          - {
+              id: "7",
               target: "fakecez",
               type: "vip",
             }
@@ -170,6 +175,31 @@ jobs:
         with:
           tag_name: MLBB-KNMOD-Internal
           files: knmodapk/*
+          generate_release_notes: true
+
+      - name: Downloading MOD APK
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        run: |
+          mkdir knmod-aov-garena
+          cd knmod-aov-garena
+          URL=$(curl -s -X POST https://knmod.com/file_kn/knmodaovgarena | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        uses: JeelsBoobz/delete-tag-and-release@latest
+        with:
+          delete_release: true
+          tag_name: AOV-GARENA-KNMOD
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: AOV-GARENA-KNMOD
+          files: knmod-aov-garena/*
           generate_release_notes: true
 
       - name: Downloading Fakecez VIP
