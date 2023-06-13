@@ -13,7 +13,6 @@ jobs:
 
       - name: Downloading MLBB-KNMOD-External-32bit
         run: |
-          echo $(pwd)
           cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir knmod32
           cd knmod32
