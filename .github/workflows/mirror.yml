@@ -13,7 +13,8 @@ jobs:
 
       - name: Downloading MLBB-KNMOD-External-32bit
         run: |
-          cd $HOME
+          echo $(pwd)
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir knmod32
           cd knmod32
           URL="https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes"
