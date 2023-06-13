@@ -8,60 +8,17 @@ jobs:
   Mirror:
     permissions: write-all
     runs-on: ubuntu-latest
-    continue-on-error: true
-    strategy:
-      fail-fast: false
-      matrix:
-        job:
-          - {
-              id: "1",
-              target: "knmod",
-              type: "32bit",
-            }
-          - {
-              id: "2",
-              target: "knmod",
-              type: "64bit",
-            }
-          - {
-              id: "3",
-              target: "viprock",
-              type: "32bit",
-            }
-          - {
-              id: "4",
-              target: "viprock",
-              type: "64bit",
-            }
-          - {
-              id: "5",
-              target: "knmod",
-              type: "mod",
-            }
-          - {
-              id: "6",
-              target: "knmod",
-              type: "aov",
-            }
-          - {
-              id: "7",
-              target: "fakecez",
-              type: "vip",
-            }
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Downloading lib
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+      - name: Downloading MLBB-KNMOD-External-32bit
         run: |
           mkdir knmod32
           cd knmod32
           URL="https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes"
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+      - name: Delete tag MLBB-KNMOD-External-32bit if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -69,24 +26,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+      - name: Upload Release MLBB-KNMOD-External-32bit
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-External-32bit
           files: knmod32/*
           generate_release_notes: true
 
-      - name: Downloading lib
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+      - name: Downloading MLBB-KNMOD-External-64bit
         run: |
           mkdir knmod64
           cd knmod64
           URL="https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes"
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+      - name: Delete tag MLBB-KNMOD-External-64bit if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -94,24 +48,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+      - name: Upload Release MLBB-KNMOD-External-64bit
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-External-64bit
           files: knmod64/*
           generate_release_notes: true
 
-      - name: Downloading lib
-        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+      - name: Downloading MLBB-VIPROCK-External-32bit
         run: |
           mkdir viprock32
           cd viprock32
           URL="https://viprock.my.id/file_rock/lib/armeabi-v7a/libAkSoundEngine.bytes"
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+      - name: Delete tag MLBB-VIPROCK-External-32bit if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -119,24 +70,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+      - name: Upload Release MLBB-VIPROCK-External-32bit
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-VIPROCK-External-32bit
           files: viprock32/*
           generate_release_notes: true
 
-      - name: Downloading lib
-        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+      - name: Downloading MLBB-VIPROCK-External-64bit
         run: |
           mkdir viprock64
           cd viprock64
           URL="https://viprock.my.id/file_rock/lib/arm64-v8a/libAkSoundEngine.bytes"
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+      - name: Delete tag MLBB-VIPROCK-External-64bit if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -144,24 +92,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+      - name: Upload Release MLBB-VIPROCK-External-64bit
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-VIPROCK-External-64bit
           files: viprock64/*
           generate_release_notes: true
 
-      - name: Downloading MOD APK
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+      - name: Downloading MLBB-KNMOD-Internal
         run: |
           mkdir knmodapk
           cd knmodapk
           URL=$(curl -s -X POST https://knmod.com/file_kn/knapkmod | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+      - name: Delete tag MLBB-KNMOD-Internal if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -169,24 +114,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+      - name: Upload Release MLBB-KNMOD-Internal
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-Internal
           files: knmodapk/*
           generate_release_notes: true
 
-      - name: Downloading MOD APK
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+      - name: Downloading AOV-GARENA-KNMOD
         run: |
           mkdir knmod-aov-garena
           cd knmod-aov-garena
           URL=$(curl -s -X POST https://knmod.com/file_kn/knmodaovgarena | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+      - name: Delete tag AOV-GARENA-KNMOD if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -194,24 +136,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+      - name: Upload Release AOV-GARENA-KNMOD
         uses: softprops/action-gh-release@v1
         with:
           tag_name: AOV-GARENA-KNMOD
           files: knmod-aov-garena/*
           generate_release_notes: true
 
-      - name: Downloading Fakecez VIP
-        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+      - name: Downloading MLBB-FAKECEZ-VIP
         run: |
           mkdir FakecezVIP
           cd FakecezVIP
           URL="https://vip.fakecez.com/assets.zip"
           bash ../download $(basename ${URL}) ${URL}
 
-      - name: Delete tag if exists
-        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+      - name: Delete tag MLBB-FAKECEZ-VIP if exists
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -219,19 +158,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release
-        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+      - name: Upload Release MLBB-FAKECEZ-VIP
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-FAKECEZ-VIP
           files: FakecezVIP/*
           generate_release_notes: true
 
-  RemoveDraft:
-    permissions: write-all
-    needs: [Mirror]
-    runs-on: ubuntu-latest
-    steps:
       - name: Delete Draft Releases
         uses: hugo19941994/delete-draft-releases@v1.0.1
         env:
