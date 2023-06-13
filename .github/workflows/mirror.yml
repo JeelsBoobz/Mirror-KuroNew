@@ -13,6 +13,7 @@ jobs:
 
       - name: Downloading MLBB-KNMOD-External-32bit
         run: |
+          cd $HOME
           mkdir knmod32
           cd knmod32
           URL="https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes"
@@ -35,6 +36,7 @@ jobs:
 
       - name: Downloading MLBB-KNMOD-External-64bit
         run: |
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir knmod64
           cd knmod64
           URL="https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes"
@@ -57,6 +59,7 @@ jobs:
 
       - name: Downloading MLBB-VIPROCK-External-32bit
         run: |
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir viprock32
           cd viprock32
           URL="https://viprock.my.id/file_rock/lib/armeabi-v7a/libAkSoundEngine.bytes"
@@ -79,6 +82,7 @@ jobs:
 
       - name: Downloading MLBB-VIPROCK-External-64bit
         run: |
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir viprock64
           cd viprock64
           URL="https://viprock.my.id/file_rock/lib/arm64-v8a/libAkSoundEngine.bytes"
@@ -101,6 +105,7 @@ jobs:
 
       - name: Downloading MLBB-KNMOD-Internal
         run: |
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir knmodapk
           cd knmodapk
           URL=$(curl -s -X POST https://knmod.com/file_kn/knapkmod | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
@@ -123,6 +128,7 @@ jobs:
 
       - name: Downloading AOV-GARENA-KNMOD
         run: |
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir knmod-aov-garena
           cd knmod-aov-garena
           URL=$(curl -s -X POST https://knmod.com/file_kn/knmodaovgarena | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
@@ -145,6 +151,7 @@ jobs:
 
       - name: Downloading MLBB-FAKECEZ-VIP
         run: |
+          cd /home/runner/work/Mirror-KuroNew/Mirror-KuroNew
           mkdir FakecezVIP
           cd FakecezVIP
           URL="https://vip.fakecez.com/assets.zip"
