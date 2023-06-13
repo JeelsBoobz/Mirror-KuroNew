@@ -61,7 +61,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -70,7 +70,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-External-32bit
@@ -86,7 +86,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -95,7 +95,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-External-64bit
@@ -111,7 +111,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -120,7 +120,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-VIPROCK-External-32bit
@@ -136,7 +136,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -145,7 +145,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-VIPROCK-External-64bit
@@ -161,7 +161,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -170,7 +170,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-KNMOD-Internal
@@ -186,7 +186,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -195,7 +195,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: AOV-GARENA-KNMOD
@@ -211,7 +211,7 @@ jobs:
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
         uses: JeelsBoobz/delete-tag-and-release@latest
         with:
           delete_release: true
@@ -220,7 +220,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: MLBB-FAKECEZ-VIP
