@@ -78,6 +78,12 @@ jobs:
           draft: false
           generate_release_notes: true
 
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: MLBB-KNMOD-External-32bit
+
       - name: Downloading lib
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
         run: |
@@ -103,6 +109,12 @@ jobs:
           files: knmod64/*
           draft: false
           generate_release_notes: true
+
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: MLBB-KNMOD-External-64bit
 
       - name: Downloading lib
         if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
@@ -130,6 +142,12 @@ jobs:
           draft: false
           generate_release_notes: true
 
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: MLBB-VIPROCK-External-32bit
+
       - name: Downloading lib
         if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
         run: |
@@ -155,6 +173,12 @@ jobs:
           files: viprock64/*
           draft: false
           generate_release_notes: true
+
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: MLBB-VIPROCK-External-64bit
 
       - name: Downloading MOD APK
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
@@ -182,6 +206,12 @@ jobs:
           draft: false
           generate_release_notes: true
 
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: MLBB-KNMOD-Internal
+
       - name: Downloading MOD APK
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
         run: |
@@ -208,6 +238,12 @@ jobs:
           draft: false
           generate_release_notes: true
 
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: AOV-GARENA-KNMOD
+
       - name: Downloading Fakecez VIP
         if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
         run: |
@@ -233,3 +269,9 @@ jobs:
           files: FakecezVIP/*
           draft: false
           generate_release_notes: true
+
+      - name: Publish release on GitHub
+        uses: test-room-7/action-publish-release-drafts@v0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: MLBB-FAKECEZ-VIP
