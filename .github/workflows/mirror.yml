@@ -79,6 +79,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -111,6 +112,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -143,6 +145,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='32bit' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -175,6 +178,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='viprock' && matrix.job.type=='64bit' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -207,6 +211,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -239,6 +244,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -271,6 +277,7 @@ jobs:
           generate_release_notes: true
 
       - name: Publish release on GitHub
+        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
         uses: test-room-7/action-publish-release-drafts@v0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
