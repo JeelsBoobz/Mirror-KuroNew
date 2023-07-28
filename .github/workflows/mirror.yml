@@ -31,7 +31,7 @@ jobs:
           - {
               id: "4",
               target: "knmod",
-              type: "aov",
+              type: "aov_gr",
             }
           - {
               id: "5",
