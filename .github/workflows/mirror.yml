@@ -1,0 +1,223 @@
+name: Mirror
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *'
+jobs:
+
+  Mirror:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - {
+              id: "1",
+              target: "knmod",
+              type: "32bit",
+            }
+          - {
+              id: "2",
+              target: "knmod",
+              type: "64bit",
+            }
+          - {
+              id: "3",
+              target: "knmod",
+              type: "mod",
+            }
+          - {
+              id: "4",
+              target: "knmod",
+              type: "aov",
+            }
+          - {
+              id: "5",
+              target: "fakecez",
+              type: "vip",
+            }
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Downloading lib
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        run: |
+          mkdir knmod32
+          cd knmod32
+          URL="https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes"
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: MLBB-KNMOD-External-32bit
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        id: release_knmod_32bit
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-32bit
+          files: knmod32/*
+          draft: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish release
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.release_knmod_32bit.outputs.id }}
+
+      - name: Downloading lib
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        run: |
+          mkdir knmod64
+          cd knmod64
+          URL="https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes"
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: MLBB-KNMOD-External-64bit
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        id: release_knmod_64bit
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-External-64bit
+          files: knmod64/*
+          draft: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish release
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.release_knmod_64bit.outputs.id }}
+
+      - name: Downloading MOD APK
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+        run: |
+          mkdir knmodapk
+          cd knmodapk
+          URL=$(curl -s -X POST https://knmod.com/file_kn/knapkmod | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: MLBB-KNMOD-Internal
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        id: release_knmod_mod
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-KNMOD-Internal
+          files: knmodapk/*
+          draft: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish release
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.release_knmod_mod.outputs.id }}
+
+      - name: Downloading MOD APK
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        run: |
+          mkdir knmod-aov-garena
+          cd knmod-aov-garena
+          URL=$(curl -s -X POST https://knmod.com/file_kn/knmodaovgarena | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: AOV-GARENA-KNMOD
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        id: release_knmod_aov
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: AOV-GARENA-KNMOD
+          files: knmod-aov-garena/*
+          draft: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish release
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov' }}
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.release_knmod_aov.outputs.id }}
+
+      - name: Downloading Fakecez VIP
+        if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        run: |
+          mkdir FakecezVIP
+          cd FakecezVIP
+          URL="https://fakecez.com/VIPPROJECT/Fakecez/assets.zip"
+          bash ../download $(basename ${URL}) ${URL}
+
+      - name: Delete tag if exists
+        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: MLBB-FAKECEZ-VIP
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release
+        id: release_fakecez_vip
+        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: MLBB-FAKECEZ-VIP
+          files: FakecezVIP/*
+          draft: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish release
+        if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.release_fakecez_vip.outputs.id }}
