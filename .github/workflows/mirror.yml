@@ -43,6 +43,11 @@ jobs:
               target: "fakecez",
               type: "vip",
             }
+          - {
+              id: "7",
+              target: "senju",
+              type: "vip",
+            }
 
     steps:
       - uses: actions/checkout@v3
