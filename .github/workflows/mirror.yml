@@ -274,7 +274,7 @@ jobs:
         run: |
           mkdir SenjuVIP
           cd SenjuVIP
-          URL="https://fakecez.com/VIPPROJECT/Senju/assets.zip"
+          URL="https://fakecez.com/VIPPROJECT/Senju/exfile.zip"
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
