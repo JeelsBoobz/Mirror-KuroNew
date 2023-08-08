@@ -238,7 +238,7 @@ jobs:
         run: |
           mkdir FakecezVIP
           cd FakecezVIP
-          URL="https://fakecez.com/VIPPROJECT/Fakecez/assets.zip"
+          URL="https://fakecez.com/VIPPROJECT/Fakecez/exfile.zip"
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
