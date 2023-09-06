@@ -55,7 +55,7 @@ jobs:
             }
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Downloading lib
         if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
