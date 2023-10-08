@@ -16,232 +16,67 @@ jobs:
           - {
               id: "1",
               target: "knmod",
-              type: "32bit",
+              type: "vip",
             }
           - {
               id: "2",
-              target: "knmod",
-              type: "64bit",
-            }
-          - {
-              id: "3",
-              target: "knmod",
-              type: "mod",
-            }
-          - {
-              id: "4",
-              target: "knmod",
-              type: "aov_gr",
-            }
-          - {
-              id: "5",
-              target: "knmod",
-              type: "aov_gl",
-            }
-          - {
-              id: "6",
               target: "fakecez",
               type: "vip",
             }
           - {
-              id: "7",
+              id: "3",
               target: "senju",
               type: "vip",
             }
           - {
-              id: "8",
+              id: "4",
               target: "unbeatable",
               type: "vip",
             }
           - {
-              id: "9",
-              target: "hatake",
+              id: "5",
+              target: "novuz",
               type: "vip",
             }
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Downloading lib
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+      - name: Downloading KNMOD VIP
+        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='vip' }}
         run: |
-          mkdir knmod32
-          cd knmod32
-          URL="https://knmod.com/file_kn/lib/armeabi-v7a/libAkSoundEngine.bytes"
+          mkdir KNMODVIP
+          cd KNMODVIP
+          URL="https://knmod.com/file_kn/lib/knnew.zip"
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='vip' }}
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
-          tag_name: MLBB-KNMOD-External-32bit
+          tag_name: MLBB-KNMOD-VIP
           delete_release: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        id: release_knmod_32bit
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        id: release_knmod_vip
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='vip' }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: MLBB-KNMOD-External-32bit
-          files: knmod32/*
+          tag_name: MLBB-KNMOD-VIP
+          files: KNMODVIP/*
           draft: false
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='32bit' }}
+        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='vip' }}
         uses: StuYarrow/publish-release@v1.1.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          id: ${{ steps.release_knmod_32bit.outputs.id }}
-
-      - name: Downloading lib
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
-        run: |
-          mkdir knmod64
-          cd knmod64
-          URL="https://knmod.com/file_kn/lib/arm64-v8a/libAkSoundEngine.bytes"
-          bash ../download $(basename ${URL}) ${URL}
-
-      - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          tag_name: MLBB-KNMOD-External-64bit
-          delete_release: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release
-        id: release_knmod_64bit
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: MLBB-KNMOD-External-64bit
-          files: knmod64/*
-          draft: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='64bit' }}
-        uses: StuYarrow/publish-release@v1.1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          id: ${{ steps.release_knmod_64bit.outputs.id }}
-
-      - name: Downloading MOD APK
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='mod' }}
-        run: |
-          mkdir knmodapk
-          cd knmodapk
-          URL=$(curl -s -X POST https://knmod.com/file_kn/knapkmod | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
-          bash ../download $(basename ${URL}) ${URL}
-
-      - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          tag_name: MLBB-KNMOD-Internal
-          delete_release: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release
-        id: release_knmod_mod
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: MLBB-KNMOD-Internal
-          files: knmodapk/*
-          draft: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='mod' }}
-        uses: StuYarrow/publish-release@v1.1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          id: ${{ steps.release_knmod_mod.outputs.id }}
-
-      - name: Downloading MOD APK
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov_gr' }}
-        run: |
-          mkdir knmod-aov-garena
-          cd knmod-aov-garena
-          URL=$(curl -s -X POST https://knmod.com/file_kn/knmodaovgarena | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
-          bash ../download $(basename ${URL}) ${URL}
-
-      - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov_gr' }}
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          tag_name: AOV-GARENA-KNMOD
-          delete_release: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release
-        id: release_knmod_aov_gr
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov_gr' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: AOV-GARENA-KNMOD
-          files: knmod-aov-garena/*
-          draft: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov_gr' }}
-        uses: StuYarrow/publish-release@v1.1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          id: ${{ steps.release_knmod_aov_gr.outputs.id }}
-
-
-      - name: Downloading MOD APK
-        if: ${{ matrix.job.target=='knmod' && matrix.job.type=='aov_gl' }}
-        run: |
-          mkdir knmod-aov-global
-          cd knmod-aov-global
-          URL=$(curl -s -X POST https://knmod.com/file_kn/knmodaovglobal | grep ".apk'>" | sed "s/.*<a href='\(.*\)'>.*/\1/")
-          bash ../download $(basename ${URL}) ${URL}
-
-      - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov_gl' }}
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          tag_name: AOV-GLOBAL-KNMOD
-          delete_release: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release
-        id: release_knmod_aov_gl
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov_gl' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: AOV-GLOBAL-KNMOD
-          files: knmod-aov-global/*
-          draft: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish release
-        if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='aov_gl' }}
-        uses: StuYarrow/publish-release@v1.1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          id: ${{ steps.release_knmod_aov_gl.outputs.id }}
+          id: ${{ steps.release_knmod_vip.outputs.id }}
 
       - name: Downloading Fakecez VIP
         if: ${{ matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
@@ -351,38 +186,38 @@ jobs:
         with:
           id: ${{ steps.release_unbeatable_vip.outputs.id }}
 
-      - name: Downloading Hatake VIP
-        if: ${{ matrix.job.target=='hatake' && matrix.job.type=='vip' }}
+      - name: Downloading Novuz VIP
+        if: ${{ matrix.job.target=='novuz' && matrix.job.type=='vip' }}
         run: |
-          mkdir HatakeVIP
-          cd HatakeVIP
-          URL="https://fakecez.com/VIPPROJECT/Hatake/exfile.zip"
+          mkdir NovuzVIP
+          cd NovuzVIP
+          URL="https://fakecez.com/VIPPROJECT/Novuz/exfile.zip"
           bash ../download $(basename ${URL}) ${URL}
 
       - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='hatake' && matrix.job.type=='vip' }}
+        if: ${{ success() && matrix.job.target=='novuz' && matrix.job.type=='vip' }}
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
-          tag_name: MLBB-HATAKE-VIP
+          tag_name: MLBB-NOVUZ-VIP
           delete_release: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release
-        id: release_hatake_vip
-        if: ${{ success() && matrix.job.target=='hatake' && matrix.job.type=='vip' }}
+        id: release_novuz_vip
+        if: ${{ success() && matrix.job.target=='novuz' && matrix.job.type=='vip' }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: MLBB-HATAKE-VIP
-          files: HatakeVIP/*
+          tag_name: MLBB-NOVUZ-VIP
+          files: NovuzVIP/*
           draft: false
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish release
-        if: ${{ success() && matrix.job.target=='hatake' && matrix.job.type=='vip' }}
+        if: ${{ success() && matrix.job.target=='novuz' && matrix.job.type=='vip' }}
         uses: StuYarrow/publish-release@v1.1.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          id: ${{ steps.release_hatake_vip.outputs.id }}
+          id: ${{ steps.release_novuz_vip.outputs.id }}
