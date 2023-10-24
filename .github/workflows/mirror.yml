@@ -30,11 +30,6 @@ jobs:
             }
           - {
               id: "4",
-              target: "unbeatable",
-              type: "vip",
-            }
-          - {
-              id: "5",
               target: "novuz",
               type: "vip",
             }
@@ -149,42 +144,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           id: ${{ steps.release_senju_vip.outputs.id }}
-
-      - name: Downloading Unbeatable VIP
-        if: ${{ matrix.job.target=='unbeatable' && matrix.job.type=='vip' }}
-        run: |
-          mkdir UnbeatableVIP
-          cd UnbeatableVIP
-          URL="https://fakecez.com/VIPPROJECT/Unbeatable/exfile.zip"
-          bash ../download $(basename ${URL}) ${URL}
-
-      - name: Delete tag if exists
-        if: ${{ success() && matrix.job.target=='unbeatable' && matrix.job.type=='vip' }}
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          tag_name: MLBB-UNBEATABLE-VIP
-          delete_release: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release
-        id: release_unbeatable_vip
-        if: ${{ success() && matrix.job.target=='unbeatable' && matrix.job.type=='vip' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: MLBB-UNBEATABLE-VIP
-          files: UnbeatableVIP/*
-          draft: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish release
-        if: ${{ success() && matrix.job.target=='unbeatable' && matrix.job.type=='vip' }}
-        uses: StuYarrow/publish-release@v1.1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          id: ${{ steps.release_unbeatable_vip.outputs.id }}
 
       - name: Downloading Novuz VIP
         if: ${{ matrix.job.target=='novuz' && matrix.job.type=='vip' }}
