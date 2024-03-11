@@ -56,7 +56,7 @@ jobs:
       - name: Upload Release
         id: release_knmod_vip
         if: ${{ success() && matrix.job.target=='knmod' && matrix.job.type=='vip' }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: MLBB-KNMOD-VIP
           files: KNMODVIP/*
@@ -92,7 +92,7 @@ jobs:
       - name: Upload Release
         id: release_fakecez_vip
         if: ${{ success() && matrix.job.target=='fakecez' && matrix.job.type=='vip' }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: MLBB-FAKECEZ-VIP
           files: FakecezVIP/*
@@ -128,7 +128,7 @@ jobs:
       - name: Upload Release
         id: release_senju_vip
         if: ${{ success() && matrix.job.target=='senju' && matrix.job.type=='vip' }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: MLBB-SENJU-VIP
           files: SenjuVIP/*
@@ -164,7 +164,7 @@ jobs:
       - name: Upload Release
         id: release_novuz_vip
         if: ${{ success() && matrix.job.target=='novuz' && matrix.job.type=='vip' }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: MLBB-NOVUZ-VIP
           files: NovuzVIP/*
